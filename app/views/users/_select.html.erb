@@ -1,0 +1,107 @@
+
+<%# Receiving the parameters from render invoke %>
+<input type='hidden' id='return_place_<%=id%>' value='<%=return_place%>'></input>
+<input type='hidden' id='id_<%=id%>' value='<%=id%>'></input>
+
+
+<h4>Search by...</h4>
+  <div class="input-group">
+    <input type='text' id='search_field_name_<%=id%>' class='form-control' placeholder="Name">
+   
+    <span class="input-group-btn">
+      <button type="button" class="btn btn-default" id='cancel_<%=id%>'>
+        <span aria-hidden="true">×</span>
+       </button>
+    </span>
+  </div>
+
+  <div class="input-group">
+    <input type='text' id='search_field_last_name_<%=id%>' class='form-control' placeholder="Last name">
+   
+    <span class="input-group-btn">
+      <button type="button" class="btn btn-default" id='cancel_1_<%=id%>'>
+        <span aria-hidden="true">×</span>
+       </button>
+    </span>
+  </div>
+
+<button id='search_<%=id%>' class='btn btn-primary form-control'>Search</button>
+
+  <div class="panel panel-info">
+    <!-- Default panel contents -->
+    <div class="panel-heading"></div>
+
+      <table class="table table-fixed">
+      <thead>
+        <tr>
+          <th width="35%"></th>
+          <th class="col-xs-4">Name</th>
+        </tr>
+      </thead> 
+      <div id='scrollable' height='230px' overflow='auto' >
+        <tbody id='table-body_<%=id%>'>
+            <% @users.each do |user| %>
+            <tr>
+              <td class="col-xs-2">
+                <button type="button" class="btn btn-info" data-dismiss="modal" onclick=listeningSelection_<%=id%>(<%= user.id %>,"<%=return_place%>")>
+                  <span class="glyphicon glyphicon-ok"></span> Select
+                </button>
+          
+              </td>
+              <td class="col-xs-4"><%=user.last_name+', '+user.name%></td>
+            </tr>
+            <% end %>
+
+
+        </tbody>
+      </div>
+      </table>
+  </div>
+
+ 
+
+<script type="text/javascript">
+  $('#cancel_<%=id%>').on('click',function(){
+    $('#search_field_name_<%=id%>').val("");
+    $('#search_<%=id%>').click();
+  });
+   $('#cancel_1_<%=id%>').on('click',function(){
+    $('#search_field_last_name_<%=id%>').val("");
+    $('#search_<%=id%>').click();
+  });
+
+
+  $('#search_<%=id%>').on('click',function(){
+    var val_name =  $('#search_field_name_<%=id%>').val();
+    var val_last_name =  $('#search_field_last_name_<%=id%>').val();
+    $.ajax({
+      dateType:'json',
+      url:'/users/search',
+      data: { name: val_name,
+              last_name: val_last_name},
+      method: 'POST'
+    }).done(function(data){
+      var res='';
+      for (i=0;i<data.length;i++){
+         res=res+'<tr >';
+        res=res+'<td class="col-xs-2"><button type="button" class="btn btn-info" data-dismiss="modal" onclick=listeningSelection_'+$('#id_<%=id%>').val()+'('+data[i].id+',"'+$('#return_place_<%=id%>').val()+'")><span class="glyphicon glyphicon-ok"></span> Select</button></td>';
+        res=res+'<td class="col-xs-4">'+data[i].name+'</td>';
+        res=res+'</tr>';
+      }
+      $('#table-body_<%=id%>').html(res);
+    });
+  });
+
+  function listeningSelection_<%=id%>(id,return_place){
+    $('#'+return_place+'_id').val(id);                  //set id in hidden field 
+    $.ajax({
+      dateType:'json',
+      url:'/users/consult',
+      data: { id: id},
+      method: 'POST'
+    }).done(function(data){
+      $('#'+return_place+'_name').val(data[0].name);    // set name selected
+    });
+  }
+
+</script>

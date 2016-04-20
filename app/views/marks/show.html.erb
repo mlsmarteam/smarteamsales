@@ -1,0 +1,4 @@
+<% provide(:title, @mark.name) %>
+
+<h1><%=@mark.name%></h1>
+<h3><span><%= link_to "Edit this mark", edit_mark_path %>-<%= link_to "Remove this mark", mark_path, method: "delete" %></span></h3>

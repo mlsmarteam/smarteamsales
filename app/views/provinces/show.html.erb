@@ -1,0 +1,4 @@
+<% provide(:title, @province.name) %>
+
+<h1><%=@province.name%></h1>
+<h3><span><%= link_to "Edit this province", edit_province_path %>-<%= link_to "Remove this province", province_path, method: "delete" %></span></h3>

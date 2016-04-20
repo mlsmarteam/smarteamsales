@@ -1,0 +1,139 @@
+<% provide(:title, "New") %>
+<h1>New user</h1>
+
+<ul class="nav nav-tabs" id="edit_user_panel">
+<li class="active"><a href="#identification_user" data-toggle="tab"> Identification </a></li>
+<li><a href="#ubication_user" data-toggle="tab"> Ubication </a></li>
+<li><a href="#security_user" data-toggle="tab"> Security </a></li>
+<li><a href="#given_products" data-toggle="tab"> Setting </a></li>
+</ul>
+
+<%= form_for(@user) do |f| %>
+	<%= render 'shared/error_messages', object: f.object %>
+	<div class="tab-content">
+		<div class="tab-pane active" id="identification_user">  
+			<div class="row" >
+		
+			  <div class="col-md-6" >
+			   		
+
+				 	  <%= f.label :doc_type_id %> 
+     				  <div class="input-group">
+       					<%= f.hidden_field :doc_type_id %>
+        				<% if @user.doc_type!=nil %>
+         					 <input type='text' id='user_doc_type_name' value='<%= @user.doc_type.name %>' class='form-control' disabled></input>
+          
+        				<%else%>
+           				<input type='text' id='user_doc_type_name' class='form-control' disabled></input>
+        				<%end%>
+				        <span class="input-group-btn">
+				           <button type="button" class="btn btn-info" data-toggle="modal" data-target="#popup-doctype">
+				            <span class="glyphicon glyphicon-search"></span> Search
+				           </button>
+				        </span>
+      				</div>
+						 
+			      <%= f.label :name %>
+			      <%= f.text_field :name, class: 'form-control' %>
+
+			    
+			      <%= f.label :email %>
+			      <%= f.email_field :email, class: 'form-control' %>
+
+			      <%= f.label :birthdate %>
+			      <%= f.date_field :birthdate, class: 'form-control'%>
+			
+			  </div>
+			  <div class="col-md-6">
+			  		<%= f.label :doc_number %>
+			      <%= f.text_field :doc_number, class: 'form-control' %>	
+
+			      <%= f.label :last_name %>
+			      <%= f.text_field :last_name, class: 'form-control' %>
+
+			      <%= f.label :cuil %>
+			      <%= f.text_field :cuil, class: 'form-control' %>
+
+			  </div>
+			</div>
+		</div>
+		<div class="tab-pane" id="ubication_user" > 
+			<div class="row" >
+		
+			  <div class="col-md-6" >
+			   		<%= f.label :street %>
+			      <%= f.text_field :street, class: 'form-control' %>
+			    
+			      <%= f.label :apartment %>
+			      <%= f.email_field :apartment	, class: 'form-control' %>
+
+			      <%= f.label :province %>
+			      <% if @user.city!=nil %>
+			        <input type='text' id='user_city_province_name' value='<%= @user.city.province.name %>' class='form-control' disabled></input>
+			      <%else%>
+			      	<input type='text' id='user_city_province_name' class='form-control' disabled></input>
+			      <%end%>
+			
+			  </div>
+			  <div class="col-md-6">
+			  		<%= f.label :floor %>
+			      <%= f.text_field :floor, class: 'form-control' %>
+
+			      <%= f.label :city_id %> 
+			      <div class="input-group">
+			        <%= f.hidden_field :city_id %>
+			        <% if @user.city!=nil %>
+			          <input type='text' id='user_city_name' value='<%= @user.city.name %>' class='form-control' disabled></input>
+			          
+			        <%else%>
+			           <input type='text' id='user_city_name' class='form-control' disabled></input>
+			        <%end%>
+			        <span class="input-group-btn">
+			           <button type="button" class="btn btn-info" data-toggle="modal" data-target="#popup-city">
+			            <span class="glyphicon glyphicon-search"></span> Search
+			           </button>
+			        </span>
+			      </div>
+
+				    <%= f.label :country %>
+			      <% if @user.city!=nil %>
+			      	<input type='text' id='user_city_province_country_name' value='<%= @user.city.province.country.name %>' class='form-control' disabled></input>
+			      <%else%>
+			      	<input type='text' id='user_city_province_country_name' class='form-control' disabled></input>
+			      <%end%>
+			
+
+
+
+
+			  </div>
+			</div>
+		</div>
+		<div class="tab-pane" id="security_user" > 
+			<div class="row" >
+		
+			  <div class="col-md-6 col-md-offset-3" >
+
+		   		<%= f.label :password %>
+  			  <%= f.password_field :password, class: 'form-control' %>
+
+     		 	<%= f.label :password_confirmation, "Confirmation" %>
+     			<%= f.password_field :password_confirmation, class: 'form-control' %>
+			
+			  </div>
+			</div>
+		</div>
+		<div class="tab-pane" id="requested_products" > 4 </div>
+	</div>
+	<%= f.submit "Create user", class: "btn btn-primary" %>
+<%end%>
+	
+
+
+<div id='mark_doc_type'>
+  <%= render :partial => 'shared/popup', :locals => {:id =>'doctype' ,:popup_title => 'Select a document type',:popup_form =>'doc_types/select', :return_place =>'user_doc_type'} %>
+</div>
+
+<div id='city_popup'>
+  <%= render :partial => 'shared/popup', :locals => {:id =>'city', :popup_title => 'Select a city',:popup_form =>'cities/select', :return_place =>'user_city'} %>
+</div>

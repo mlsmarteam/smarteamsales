@@ -1,0 +1,81 @@
+<% provide(:title, 'New') %>
+<h1>New article</h1>
+
+<div class="row">
+  
+
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@article) do |f| %>
+    	<%= render 'shared/error_messages', object: f.object %>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+
+      <%= f.label :barcode %>
+      <%= f.number_field :barcode %>
+
+      <%= f.label :purchase_amount %>
+      <%= f.number_field :purchase_amount %>
+
+      <%= f.label :sale_amount %>
+      <%= f.number_field :sale_amount %>
+
+      <%= f.label :min_stock %>
+      <%= f.number_field :min_stock %>
+
+      <%= f.label :max_stock %>
+      <%= f.number_field :max_stock %>
+
+      <%= f.label :mark_id %> 
+      <div class="input-group">
+        <%= f.hidden_field :mark_id %>
+        <% if @article.mark!=nil %>
+          <input type='text' id='article_mark_name' value='<%= @article.mark.name %>' class='form-control' disabled></input>
+          
+        <%else%>
+           <input type='text' id='article_mark_name' class='form-control' disabled></input>
+        <%end%>
+        <span class="input-group-btn">
+           <button type="button" class="btn btn-info" data-toggle="modal" data-target="#popup-mark">
+            <span class="glyphicon glyphicon-search"></span> Search
+           </button>
+        </span>
+      </div>
+      <%= f.label "Company provider" %>
+      <%= f.hidden_field :companies%>
+      <div class="input-group">
+        <% if @article.has_companies? %>
+          <input type='text' id='article_companies_names' class='form-control' disabled></input>
+        <%else%>
+          <input type='text' id='article_companies_names' class='form-control' disabled></input>
+        <%end%>
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#popup-company">
+            <span class="glyphicon glyphicon-search"></span> Search
+           </button>
+        </span>
+      </div>
+      <%= f.label :categories %>
+      <div class="input-group">
+        <% if @article.has_categories? %>
+          <%= f.text_field :categories,placeholder: "Select any categories",class:'form-control'%>
+        <%else%>
+          <%= f.text_field :categories,placeholder: "Select any categories", class:'form-control'%>
+        <%end%>
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-info" >
+            <span class="glyphicon glyphicon-search"></span> Search
+           </button>
+        </span>
+      </div>
+      <%= f.submit "Create article", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+
+<div id='mark_popup'>
+  <%= render :partial => 'shared/popup', :locals => {:id =>'mark' ,:popup_title => 'Select a mark',:popup_form =>'marks/select', :return_place =>'article_mark'} %>
+</div>
+
+<div id='company_popup'>
+  <%= render :partial => 'shared/popup', :locals => {:id =>'company' ,:popup_title => 'Select some companies',:popup_form =>'companies/multiple_select', :return_place =>'article_companies'} %>
+</div>

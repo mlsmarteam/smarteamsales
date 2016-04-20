@@ -1,0 +1,4 @@
+<% provide(:title, 'Sale') %>
+
+<h1><%=@sale.amount%></h1>
+<h3><span><%= link_to "Edit this sale", edit_sale_path %>-<%= link_to "Remove this sale", sale_path, method: "delete" %></span></h3>

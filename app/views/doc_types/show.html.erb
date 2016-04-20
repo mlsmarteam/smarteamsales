@@ -1,0 +1,4 @@
+<% provide(:title, @doc_type.name) %>
+
+<h1><%=@doc_type.name%></h1>
+<h3><span><%= link_to "Edit this document type", edit_doc_type_path %>-<%= link_to "Remove this document type", doc_type_path, method: "delete" %></span></h3>

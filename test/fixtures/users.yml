@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  doc_type_id: 
+  doc_number: MyString
+  name: MyString
+  last_name: MyString
+  street: MyString
+  number: MyString
+  floor: MyString
+  apartment: MyString
+  city_id: 
+  fixed_tel: MyString
+  cel_tel: MyString
+  email: MyString
+  cuil: MyString
+  birthdate: 2016-03-30 10:33:07
+
+two:
+  doc_type_id: 
+  doc_number: MyString
+  name: MyString
+  last_name: MyString
+  street: MyString
+  number: MyString
+  floor: MyString
+  apartment: MyString
+  city_id: 
+  fixed_tel: MyString
+  cel_tel: MyString
+  email: MyString
+  cuil: MyString
+  birthdate: 2016-03-30 10:33:07

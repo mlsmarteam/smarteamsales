@@ -1,0 +1,3 @@
+<% provide(:title, @expenditure_type.name) %>
+<h1><%= @expenditure_type.name %></h1>
+<h3><span><%= link_to "Edit this expenditure type", edit_expenditure_type_path %>-<%= link_to "Remove this expenditure type", expenditure_type_path, method: "delete" %></span></h3>

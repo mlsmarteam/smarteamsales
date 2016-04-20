@@ -1,0 +1,37 @@
+<% provide(:title, 'New') %>
+<h1>New sale</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+  	<%= form_for(@sale) do |f| %>
+  	<%= render 'shared/error_messages', object: f.object %>
+  	<%= f.label :amount %>
+  	<%= f.number_field :amount %>
+
+  	<%= f.label :date %>
+  	<%= f.date_field :date %>
+
+    <%= f.label :user_id %> 
+    <div class="input-group">
+      <%= f.hidden_field :user_id %>
+      <% if @sale.user!=nil %>
+        <input type='text' id='sale_user_name' value='<%= @sale.user.name %>' class='form-control' disabled></input>
+        
+      <%else%>
+         <input type='text' id='sale_user_name' class='form-control' disabled></input>
+      <%end%>
+      <span class="input-group-btn">
+         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#popup-user">
+          <span class="glyphicon glyphicon-search"></span> Search
+         </button>
+      </span>
+    </div>
+  	<%= f.submit "Create sale", class: "btn btn-primary" %>
+  	<% end %>
+  </div>
+</div>
+
+<div id='user_popup'>
+  <%= render :partial => 'shared/popup', :locals => {:id =>'user' ,:popup_title => 'Select a user',:popup_form =>'users/select', :return_place =>'sale_user'} %>
+</div>
+

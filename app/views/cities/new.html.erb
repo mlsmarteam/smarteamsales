@@ -1,0 +1,35 @@
+<% provide(:title, 'New') %>
+<h1>New city</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+  	<%= form_for(@city) do |f| %>
+  	<%= render 'shared/error_messages', object: f.object %>
+  	<%= f.label :name %>
+  	<%= f.text_field :name %>
+
+
+     <%= f.label :province_id %> 
+      <div class="input-group">
+        <%= f.hidden_field :province_id %>
+        <% if @city.province!=nil %>
+          <input type='text' id='city_province_name' value='<%= @city.province.name %>' class='form-control' disabled></input>
+          
+        <%else%>
+           <input type='text' id='city_province_name' class='form-control' disabled></input>
+        <%end%>
+        <span class="input-group-btn">
+           <button type="button" class="btn btn-info" data-toggle="modal" data-target="#popup-province">
+            <span class="glyphicon glyphicon-search"></span> Search
+           </button>
+        </span>
+      </div>
+
+  	<%= f.submit "Create city", class: "btn btn-primary" %>
+  	<% end %>
+  </div>
+</div>
+
+<div id='province_popup'>
+  <%= render :partial => 'shared/popup', :locals => {:id =>'province', :popup_title => 'Select a province',:popup_form =>'provinces/select', :return_place =>'city_province'} %>
+</div>

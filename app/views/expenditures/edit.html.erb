@@ -1,0 +1,40 @@
+<% provide(:title, 'Edit') %>
+<h1>Edit expenditure</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+  	<%= form_for(@expenditure) do |f| %>
+
+  	<%= f.label :expenditure_type_id %> 
+    <div class="input-group">
+      <%= f.hidden_field :expenditure_type_id %>
+      <% if @expenditure.expenditure_type!=nil %>
+        <input type='text' id='expenditure_expenditure_type_name' value='<%= @expenditure.expenditure_type.name %>' class='form-control' disabled></input>
+        
+      <%else%>
+         <input type='text' id='expenditure_expenditure_type_name' class='form-control' disabled></input>
+      <%end%>
+      <span class="input-group-btn">
+         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#popup-expendituretype">
+          <span class="glyphicon glyphicon-search"></span> Search
+         </button>
+      </span>
+    </div>
+  	
+  	<%= f.label :amount %>
+  	<%= f.number_field :amount %>
+
+  	<%= f.label :description %>
+  	<%= f.text_field :description %>
+
+  	<%= f.label :date %>
+  	<%= f.date_field :date %>
+  	<%= f.submit "Edit expenditure", class: "btn btn-primary" %>
+  	<% end %>
+  </div>
+</div>
+
+<div id='expenditure_type_popup'>
+  <%= render :partial => 'shared/popup', :locals => {:id =>'expendituretype' ,:popup_title => 'Select a expendityre type',:popup_form =>'expenditure_types/select', :return_place =>'expenditure_expenditure_type'} %>
+</div>
+

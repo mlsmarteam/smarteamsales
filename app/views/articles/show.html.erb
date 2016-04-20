@@ -1,0 +1,5 @@
+<% provide(:title, @article.name) %>
+
+<h1><%=@article.name%></h1>
+
+<h3><span><%= link_to "Edit this article", edit_article_path %>-<%= link_to "Remove this article", article_path, method: "delete" %></span></h3>

@@ -1,0 +1,4 @@
+<% provide(:title, 'Turn') %>
+
+<h1><%=@turn.check_in%>-<%=@turn.check_out%></h1>
+<h3><span><%= link_to "Edit this turn", edit_turn_path %>-<%= link_to "Remove this turn", turn_path, method: "delete" %></span></h3>
